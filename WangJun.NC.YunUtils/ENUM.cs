@@ -113,6 +113,12 @@
             ByteArray=0x004
         }
 
+        public enum LoginType
+        {
+            Telphone = 0x01,
+            Email = 0x02
+        }
+
 
     }
 }
