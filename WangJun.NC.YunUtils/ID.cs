@@ -75,5 +75,38 @@ namespace WangJun.NC.YunUtils
             }
         }
 
+        public static List<string> GetNewGuidList(int count)
+        {
+            var list = new List<string>();
+            count = Math.Abs(count) % 1001;
+            for (int k = 0; k < count; k++)
+            {
+                list.Add(Guid.NewGuid().ToString());
+            }
+            return list;
+        }
+
+        public static List<string> GetOrderIDList(int count)
+        {
+            var list = new List<string>();
+            count = Math.Abs(count) % 101;
+            for (int k = 0; k < count; k++)
+            {
+                list.Add(ID.OrderID);
+            }
+            return list;
+        }
+
+        public static List<string> GetShortOrderIDList(int count)
+        {
+            var list = new List<string>();
+            count = Math.Abs(count) % 101;
+            for (int k = 0; k < count; k++)
+            {
+                list.Add(ID.ShortOrderID);
+            }
+            return list;
+        }
+
     }
 }

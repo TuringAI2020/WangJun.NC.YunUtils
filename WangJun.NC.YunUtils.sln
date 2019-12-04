@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WangJun.NC.YunUtils", "WangJun.NC.YunUtils\WangJun.NC.YunUtils.csproj", "{ADA703ED-5E5F-4257-A165-D08A98D3D1C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WangJun.NC.YunUtils", "WangJun.NC.YunUtils\WangJun.NC.YunUtils.csproj", "{ADA703ED-5E5F-4257-A165-D08A98D3D1C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WangJun.NC.YunUtils.WebAPI", "WangJun.NC.YunUtils.WebAPI\WangJun.NC.YunUtils.WebAPI.csproj", "{F2548D2E-AD1A-4EDD-8980-16467B8321EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WangJun.NC.BaseWebAPI", "WangJun.NC.BaseWebAPI\WangJun.NC.BaseWebAPI.csproj", "{91FFF6C2-094C-49DB-A161-37869138EF52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{ADA703ED-5E5F-4257-A165-D08A98D3D1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADA703ED-5E5F-4257-A165-D08A98D3D1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADA703ED-5E5F-4257-A165-D08A98D3D1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2548D2E-AD1A-4EDD-8980-16467B8321EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2548D2E-AD1A-4EDD-8980-16467B8321EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2548D2E-AD1A-4EDD-8980-16467B8321EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2548D2E-AD1A-4EDD-8980-16467B8321EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91FFF6C2-094C-49DB-A161-37869138EF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91FFF6C2-094C-49DB-A161-37869138EF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91FFF6C2-094C-49DB-A161-37869138EF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91FFF6C2-094C-49DB-A161-37869138EF52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

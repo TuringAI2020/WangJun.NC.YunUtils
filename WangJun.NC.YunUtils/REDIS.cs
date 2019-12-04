@@ -9,11 +9,11 @@ namespace WangJun.NC.YunUtils
     {
         private static ConnectionMultiplexer redis = null;
         private IDatabase db = null;
-        public static REDIS GetInst(int db = 0)
+        public static REDIS GetInst(int db = 0,string connection= "127.0.0.1:6379")
         {
             if (null == redis)
-            {
-                redis = ConnectionMultiplexer.Connect("127.0.0.1:7379");
+            { 
+                redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
             }
             var inst = new REDIS();
             inst.db = redis.GetDatabase(0);
@@ -60,7 +60,7 @@ namespace WangJun.NC.YunUtils
                 {
                     if (typeof(T) == typeof(string))
                     {
-                        return RES.OK(val);
+                        return RES.OK(val.ToString());
                     }
                     else
                     {
@@ -151,6 +151,34 @@ namespace WangJun.NC.YunUtils
         {
             var length = this.db.ListLength(queueName);
             return RES.OK(length);
+        }
+
+        public RES SortedSetAdd(string setName , object val,double sort)
+        {
+            if (val is string)
+            {
+                this.db.SortedSetAdd(setName, val as string, sort);
+            }
+            else if (val.GetType().IsClass)
+            {
+                this.db.SortedSetAdd(setName, JSON.ToJson(val), sort);
+            }
+            return RES.OK();
+        }
+
+
+
+        public RES Execute(string serverId, string command, object[] paramArr)
+        {
+            try
+            {
+                var res = (RedisValue[])REDIS.redis.GetDatabase().Execute(command, paramArr);
+                return RES.OK(res.ToStringArray());
+            }
+            catch (Exception ex)
+            {
+                return RES.FAIL(ex);
+            }
         }
     }
 }
