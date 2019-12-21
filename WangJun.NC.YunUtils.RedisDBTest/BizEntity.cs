@@ -15,5 +15,9 @@ namespace WangJun.NC.YunUtils.RedisDBTest
         public DateTime UpdateTime { get; set; }
 
         public int Sort { get; set; }
+
+        public string Test(string input) {
+            return input;
+        }
     }
 }

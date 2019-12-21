@@ -8,7 +8,7 @@ namespace WangJun.NC.YunUtils.RedisDBTest
     {
         static void Main(string[] args)
         {
-            var db = new RedisDB();
+            //var db = new RedisDB();
             Stopwatch watch = new Stopwatch();
             watch.Start();
             for (int k = 0; k < 1; k++)
@@ -30,7 +30,11 @@ namespace WangJun.NC.YunUtils.RedisDBTest
             //item2.ClassFullName = item2.GetType().FullName;
             //db.Save<BizEntity>(item2);
 
-            var res = db.QueryList<BizEntity>(new Dictionary<string, object> { { "Title", "新闻" } });
+            //var res = db.QueryList<BizEntity>(new Dictionary<string, object> { { "Title", "新闻" } });
+            var inst = (object)new BizEntity();
+            var type = inst.GetType();
+            var del =(Func<string, string>) type.GetMethod("Test").CreateDelegate(typeof(Func<string,string>),inst);
+            var res = del("Ok");
             watch.Stop();
             Console.WriteLine($"{watch.Elapsed} {watch.Elapsed / 1}");
             Console.ReadKey();
