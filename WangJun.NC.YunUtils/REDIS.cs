@@ -10,15 +10,19 @@ namespace WangJun.NC.YunUtils
     {
         private static ConnectionMultiplexer redis = null;
         private IDatabase db = null;
+        private static REDIS inst = null;
         public static REDIS GetInst(int db = 0, string connection = "127.0.0.1:6379")
         {
             if (null == redis)
             {
                 redis = ConnectionMultiplexer.Connect("127.0.0.1:6379");
             }
-            var inst = new REDIS();
-            inst.db = redis.GetDatabase(0);
-            return inst;
+            if (null == REDIS.inst)
+            {
+                REDIS.inst = new REDIS();
+                REDIS.inst.db = redis.GetDatabase(0);
+            }
+            return REDIS.inst;
         }
 
         public static REDIS Current

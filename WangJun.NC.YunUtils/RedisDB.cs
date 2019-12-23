@@ -18,7 +18,7 @@ namespace WangJun.NC.YunUtils
                 ///记录要保存的数据 
                 this.SaveFlat(t);
                 this.SaveToList(t);
-                this.BuildSearchIndex(t); 
+                this.BuildSearchIndex(t);
                 return RES.OK();
             }
             catch (Exception ex)
@@ -38,8 +38,9 @@ namespace WangJun.NC.YunUtils
                 return RES.FAIL(ex);
             }
         }
+         
 
-        protected RES SaveModifyNotice<T>(T  t,PropertyInfo propertyInfo) where T : Item, new()
+        protected RES SaveModifyNotice<T>(T  t) where T : Item, new()
         {
             try
             {
@@ -48,8 +49,8 @@ namespace WangJun.NC.YunUtils
                     return RES.FAIL();
                 }
 
-                var key = $"Change:{t.GetType().FullName.Replace(".", ":")}";
-                REDIS.Current.Enqueue(key, new ChangeNotice{ ClassFullName= t.GetType().FullName, ItemID=t.ItemID, PropertyName = propertyInfo.Name , PropertyValue= propertyInfo.GetValue(t)} );
+                var key = $"MODIFY:{t.GetType().FullName.Replace(".", ":")}";
+                REDIS.Current.Enqueue(key, new ChangeNotice{ ClassFullName= t.GetType().FullName, ItemID=t.ItemID  , CreateTime=DateTime.Now.Ticks} );
 
                 return RES.OK();
             }
@@ -58,26 +59,7 @@ namespace WangJun.NC.YunUtils
                 return RES.FAIL(ex);
             }
         }
-
-        protected RES SaveNewEntryNotice<T>(T t) where T : Item, new()
-        {
-            try
-            {
-                if (null == t || t.ItemID == Guid.Empty)
-                {
-                    return RES.FAIL();
-                }
-
-                var key = $"New:{t.GetType().FullName.Replace(".", ":")}";
-                REDIS.Current.Enqueue(key, t);
-
-                return RES.OK();
-            }
-            catch (Exception ex)
-            {
-                return RES.FAIL(ex);
-            }
-        }
+         
 
         protected RES FinishCheckPoint<T>(T t) where T : Item, new()
         {
@@ -136,7 +118,6 @@ namespace WangJun.NC.YunUtils
                                 var key = $"{classFullName}:{t.ItemID}:{p.Name}";
 
                                 REDIS.Current.CacheSet(key, p.GetValue(t), new TimeSpan(0, 5, 0));
-                                this.SaveModifyNotice(t, p);
                             }
                         });
                     }
@@ -151,7 +132,6 @@ namespace WangJun.NC.YunUtils
                                 REDIS.Current.CacheSet(key, p.GetValue(t), new TimeSpan(0, 5, 0));
                             }
                         });
-                        this.SaveNewEntryNotice(t);
                     }
                 }
 
@@ -172,6 +152,7 @@ namespace WangJun.NC.YunUtils
                 { 
                     var classFullName = $"{prefix}:{t.GetType().FullName.Replace(".", ":")}"; 
                     REDIS.Current.DictAdd($"{classFullName}", t.ItemID.ToString(), t);
+                    this.SaveModifyNotice(t);
                 }
                 return RES.OK();
             }
@@ -331,11 +312,14 @@ namespace WangJun.NC.YunUtils
 
         [Readonly]
         public string ClassFullName { get; set; }
-        [Readonly]
-        public string PropertyName { get; set; }
 
         [Readonly]
-        public object PropertyValue { get; set; }
+        public long CreateTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int Type { get; set; }
     }
 
     public class ReadonlyAttribute : Attribute { }

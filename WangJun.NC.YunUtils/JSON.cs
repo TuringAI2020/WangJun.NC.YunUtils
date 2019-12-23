@@ -36,7 +36,20 @@ namespace WangJun.NC.YunUtils
                 return JsonConvert.SerializeObject( value2);
             } 
                 return JsonConvert.SerializeObject(value1);
- 
+        }
+
+        public static T2 Convert<T1, T2>(T1 t1) 
+        {
+            try
+            {
+                var json = JsonConvert.SerializeObject(t1);
+                var t2 = JsonConvert.DeserializeObject<T2>(json);
+                return t2;
+            }
+            catch (Exception ex)
+            {
+                return default(T2);
+            }
         }
     }
 }
