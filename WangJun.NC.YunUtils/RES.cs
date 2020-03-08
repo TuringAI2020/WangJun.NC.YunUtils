@@ -102,7 +102,14 @@ namespace WangJun.NC.YunUtils
         {
             var res = new RES();
             res.SUCCESS = false;
-            res.DATA = $"{ex.Message}\t{((null == ex.InnerException) ? string.Empty : ex.InnerException.Message)}";
+            if (ex is Exception)
+            {
+                res.DATA = $"{ex.Message}\t{((null == ex.InnerException) ? string.Empty : ex.InnerException.Message)}";
+            }
+            else
+            {
+                res.DATA = null;
+            }
             res.MESSAGE = "发生异常";
             return res;
         }
