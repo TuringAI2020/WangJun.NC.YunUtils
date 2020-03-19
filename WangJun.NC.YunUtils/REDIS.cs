@@ -66,6 +66,8 @@ namespace WangJun.NC.YunUtils
             }
         }
 
+
+
         public RES CacheGet<T>(string key)
         {
             try
@@ -660,7 +662,52 @@ namespace WangJun.NC.YunUtils
         }
         #endregion
 
+        #region 集合
+        public RES SetAdd(string setName, object val)
+        {
+            if (!this.server.IsConnected) {
+                return RES.FAIL($"Redis {nameof(this.server.IsConnected)} {this.server.IsConnected}");
+            }
 
+            if (val is string)
+            {
+                this.db.SetAdd(setName, val as string);
+            }
+            else if (val.GetType() == typeof(DateTime))
+            {
+                this.db.SetAdd(setName, val.ToString());
+            }
+            else if (val.GetType() == typeof(int))
+            {
+                this.db.SetAdd(setName, (int)val);
+            }
+            else if (val.GetType() == typeof(long))
+            {
+                this.db.SetAdd(setName, (long)val);
+            }
+            else if (val.GetType() == typeof(decimal))
+            {
+                this.db.SetAdd(setName, (double)val);
+            }
+            else if (val.GetType() == typeof(float))
+            {
+                this.db.SetAdd(setName, (double)val);
+            }
+            else if (val.GetType() == typeof(double))
+            {
+                this.db.SetAdd(setName, (double)val);
+            }
+            else if (val.GetType() == typeof(Guid))
+            {
+                this.db.SetAdd(setName, val.ToString());
+            }
+            else if (val.GetType().IsClass)
+            {
+                this.db.SetAdd(setName, JSON.ToJson(val));
+            }
+            return RES.OK();
+        }
+        #endregion
 
 
         public RES Execute(string serverId, string command, object[] paramArr)
